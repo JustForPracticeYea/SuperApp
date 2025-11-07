@@ -1,36 +1,29 @@
-name: SuperApp Workflow
+name: get-coverage
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Build classlibriary
-      run: dotnet build SuperApp.Core/SuperApp.Core.csproj --configuration ${{matrix.configuration }}
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{matrix.configuration }}
-        path: Artifacts
+    - name: Build classlibrary
+      run: dotnet build SuperApp.Core/SuperApp.Core.csproj --configuration Release
   
   test:
     needs: build
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
     runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Run tests
-        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj --configuration ${{matrix.configuration }}
+      - name: Run tests for release with coverlet
+        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./Artifacts/
+
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Tests_${{matrix.configuration }}
-          path: Artifacts
+          name: code-coverage
+          path: Artifacts/**/coverage.cobertura.xml
