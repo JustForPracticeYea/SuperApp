@@ -2,7 +2,16 @@ name: SuperApp Workflow
 
 on: [push]
 jobs:
-  build:
+  build-debug:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build classlibriary
+      run: dotnet build SuperApp.Core/SuperApp.Core.csproj
+    - name: Build App
+      run: dotnet build SuperApp.Console/SuperApp.Console.csproj
+  build-release:
     runs-on: windows-latest
     steps:
     - name: Checkout code
