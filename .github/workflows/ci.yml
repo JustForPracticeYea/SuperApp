@@ -8,9 +8,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Build classlibriary
-      run: dotnet build src/SuperApp.Core/SuperApp.Core.csproj
+      run: dotnet build SuperApp.Core/SuperApp.Core.csproj
     - name: Build App
-      run: dotnet build src/SuperApp.Console/SuperApp.Console.csproj
+      run: dotnet build SuperApp.Console/SuperApp.Console.csproj
   
   test:
     needs: build
@@ -19,4 +19,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run tests
-        run: dotnet test src/SuperApp.Core.Tests/SuperApp.Core.Tests.csproj
+        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj
