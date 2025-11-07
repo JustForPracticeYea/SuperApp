@@ -2,5 +2,6 @@
 public static class Greeter
 {
     public static string Greet(string name) => $"Hello, {name}! Welcome to SuperApp!";
-    public static string n;
+
+    public static string m;
 }
