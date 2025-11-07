@@ -22,7 +22,7 @@ jobs:
       run: dotnet build SuperApp.Console/SuperApp.Console.csproj
   
   test-debug:
-    needs: build
+    needs: build-debug
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj  --configuration Debug
   test-release:
-    needs: build
+    needs: build-release
     runs-on: windows-latest
     steps:
       - name: Checkout code
