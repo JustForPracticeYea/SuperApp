@@ -2,7 +2,7 @@
 
 public static class Greeter
 {
-    public static string Greet(string name) => $"Hello, {name}! Welcome to SuperApp!!!!!";
+    public static string Greet(string name) => $"Hello, {name}! Welcome to SuperApp!";
 
-    public static int a;
+    public static string m;
 }
