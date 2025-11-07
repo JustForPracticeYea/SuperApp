@@ -1,39 +1,36 @@
 name: SuperApp Workflow
 
-on: [push]
+on: [pull_request]
 jobs:
-  build-debug:
+  build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Build classlibriary
-      run: dotnet build SuperApp.Core/SuperApp.Core.csproj
-    - name: Build App
-      run: dotnet build SuperApp.Console/SuperApp.Console.csproj
-  build-release:
-    runs-on: windows-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Build classlibriary
-      run: dotnet build SuperApp.Core/SuperApp.Core.csproj
-    - name: Build App
-      run: dotnet build SuperApp.Console/SuperApp.Console.csproj
+      run: dotnet build SuperApp.Core/SuperApp.Core.csproj --configuration ${{matrix.configuration }}
+    - name: Archive artifacts
+      uses: actions/upload-artifacts@v4
+      with:
+        name: ${{matrix.configuration }}
+        path: ThatsMyPath
   
-  test-debug:
-    needs: build-debug
+  test:
+    needs: build
     runs-on: windows-latest
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run tests
-        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj  --configuration Debug
-  test-release:
-    needs: build-release
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Run tests
-        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj  --configuration Release
+        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj --configuration ${{matrix.configuration }}
+      - name: Archive artifacts
+        uses: actions/upload-artifacts@v4
+        with:
+          name: Tests_${{matrix.configuration }}
+          path: ThatsMyPath
