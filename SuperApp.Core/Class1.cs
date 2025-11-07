@@ -1,5 +1,5 @@
 ﻿namespace SuperApp.Core;
 public static class Greeter
 {
-public static string Greet(string name) => $"Hello, {name}! Welcome to SuperApp!!!!!";
+public static string Greet(string name) => $"Hello, {name}! Welcome to SuperApp.......";
 }
