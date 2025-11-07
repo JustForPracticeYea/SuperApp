@@ -13,24 +13,24 @@ jobs:
     - name: Build classlibriary
       run: dotnet build SuperApp.Core/SuperApp.Core.csproj --configuration ${{matrix.configuration }}
     - name: Archive artifacts
-      uses: actions/upload-artifacts@v4
+      uses: actions/upload-artifact@v4
       with:
         name: ${{matrix.configuration }}
-        path: ThatsMyPath
+        path: Artifacts
   
   test:
     needs: build
-    runs-on: windows-latest
     strategy:
       matrix:
         configuration: [Debug, Release]
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run tests
         run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj --configuration ${{matrix.configuration }}
       - name: Archive artifacts
-        uses: actions/upload-artifacts@v4
+        uses: actions/upload-artifact@v4
         with:
           name: Tests_${{matrix.configuration }}
-          path: ThatsMyPath
+          path: Artifacts
