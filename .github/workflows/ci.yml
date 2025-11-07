@@ -20,10 +20,10 @@ jobs:
   
   test:
     needs: build
-    runs-on: windows-latest
     strategy:
       matrix:
         configuration: [Debug, Release]
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
