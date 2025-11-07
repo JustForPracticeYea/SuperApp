@@ -12,11 +12,19 @@ jobs:
     - name: Build App
       run: dotnet build SuperApp.Console/SuperApp.Console.csproj
   
-  test:
+  test-debug:
     needs: build
     runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run tests
-        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj
+        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj  --configuration Debug
+  test-release:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run tests
+        run: dotnet test SuperApp.Core.Tests/SuperApp.Core.Tests.csproj  --configuration Release
