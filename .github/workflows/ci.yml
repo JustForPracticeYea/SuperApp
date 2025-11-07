@@ -16,7 +16,7 @@ jobs:
       uses: actions/upload-artifacts@v4
       with:
         name: ${{matrix.configuration }}
-        path: ThatsMyPath
+        path: Artifacts
   
   test:
     needs: build
@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifacts@v4
         with:
           name: Tests_${{matrix.configuration }}
-          path: ThatsMyPath
+          path: Artifacts
